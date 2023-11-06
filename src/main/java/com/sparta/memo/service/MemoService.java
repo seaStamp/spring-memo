@@ -5,8 +5,6 @@ import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +35,7 @@ public class MemoService {
         Memo saveMemo = memoRepository.save(memo);
 
         // Entity -> ResponseDto
-        MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
+        MemoResponseDto memoResponseDto = new MemoResponseDto(saveMemo);
 
         return memoResponseDto;
     }
@@ -46,6 +44,10 @@ public class MemoService {
         // DB 조회
         return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
 
+    }
+
+    public List<MemoResponseDto> getMemosByKeyword(String keyword) {
+        return memoRepository.findAllByContentsContainsOrderByModifiedAtDesc(keyword).stream().map(MemoResponseDto::new).toList();
     }
 
     @Transactional
@@ -76,4 +78,5 @@ public class MemoService {
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
         );
     }
+
 }
