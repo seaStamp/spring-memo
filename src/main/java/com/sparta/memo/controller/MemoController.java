@@ -2,6 +2,7 @@ package com.sparta.memo.controller;
 
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
+import com.sparta.memo.repository.MemoRepository;
 import com.sparta.memo.service.MemoService;
 import org.springframework.web.bind.annotation.*;
 
